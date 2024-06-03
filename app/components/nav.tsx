@@ -3,31 +3,50 @@ import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
 
-export const Navigation: React.FC = () => {
-	const ref = useRef<HTMLElement>(null);
-	const [isIntersecting, setIntersecting] = useState(true);
+interface NavigationProps {
+	blur?: boolean;
+  }
 
+export const Navigation: React.FC<NavigationProps> = ({ blur = true}) => {
+	const ref = useRef<HTMLElement>(null);
+	const [isIntersecting, setIntersecting] = useState(blur);
+
+	
 	useEffect(() => {
 		if (!ref.current) return;
-		const observer = new IntersectionObserver(([entry]) =>
-			setIntersecting(entry.isIntersecting),
-		);
-
+		const observer = new IntersectionObserver(([entry]) => {
+			if (blur) { // Only update if blur is true
+			  setIntersecting(entry.isIntersecting);
+			}
+		  });
 		observer.observe(ref.current);
 		return () => observer.disconnect();
 	}, []);
-
+	
+	
+	useEffect(() => {
+		if (!blur) {
+		  setIntersecting(true);
+		}
+	  }, [blur]);
+	
 	return (
 		<header ref={ref}>
 			<div
-				className={`fixed inset-x-0 top-0 z-50 backdrop-blur  duration-200 border-b  ${
+				className={`fixed inset-x-0 top-0 z-50 duration-200 border-b  ${
 					isIntersecting
 						? "bg-zinc-900/0 border-transparent"
 						: "bg-zinc-900/500  border-zinc-800 "
-				}`}
+				} ${blur ? 'backdrop-blur' : ''}`}
 			>
 				<div className="container flex flex-row-reverse items-center justify-between p-6 mx-auto">
 					<div className="flex justify-between gap-8">
+					<Link
+							href="/roles"
+							className="duration-200 text-zinc-400 hover:text-zinc-100"
+						>
+							Roles
+						</Link>
 						<Link
 							href="/projects"
 							className="duration-200 text-zinc-400 hover:text-zinc-100"

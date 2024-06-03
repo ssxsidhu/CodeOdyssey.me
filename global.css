@@ -8,3 +8,25 @@
   }
 } 
 
+.glowing-circle {
+  width: 20px; /* Adjust size as needed */
+  height: 20px; /* Adjust size as needed */
+  border-radius: 50%; /* Ensures the element is a circle */
+  background-color: transparent; /* Removes background color */
+  box-shadow: 0 0 10px #ffffff; /* Apply glow effect */
+  animation: glow 1s infinite alternate; /* Apply glow animation */
+}
+
+@keyframes glow {
+  0% {
+      box-shadow: 0 0 10px #ffffff;
+  }
+  50% {
+      box-shadow: 0 0 30px #ffffff;
+  }
+  100% {
+      box-shadow: 0 0 10px #ffffff;
+  }
+}
+
+
