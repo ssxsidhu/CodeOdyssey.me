@@ -12,7 +12,6 @@ interface Props {
 const Timeline = ({ useClient }: Props) => {
     const circleRefs = useRef<(HTMLDivElement | null)[]>([]);
     const [glowingCircleIndex, setGlowingCircleIndex] = useState<number | null>(null);
-
     useEffect(() => {
         if (!useClient) return;
 
