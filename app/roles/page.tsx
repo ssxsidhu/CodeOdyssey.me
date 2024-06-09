@@ -1,4 +1,4 @@
-import {Timeline, TimelineMin} from './timeline';
+import {Timeline} from './timeline';
 import { Navigation } from "../components/nav";
 
 export default async function TimelinePage() {

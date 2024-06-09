@@ -27,4 +27,25 @@
   }
 }
 
+/* styles.css */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px); /* Adjust the translateY value as needed */
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-up {
+  opacity: 0; /* Start with the element hidden */
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out; /* Add a transition for smooth effect */
+}
+
+.fade-in-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
 

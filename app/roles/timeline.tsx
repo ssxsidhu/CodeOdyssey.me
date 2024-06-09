@@ -6,6 +6,7 @@ import { useRef, useEffect, useState } from 'react';
 import { TimelineRight, TimelineLeft, TimelineCard } from "./article";
 import { Card } from "../components/card";
 import useMediaQuery from "./useMediaQuery";
+import FadeInSection from "../components/fade";
 
 
 interface Props {
@@ -15,7 +16,7 @@ interface Props {
 export const Timeline = ({ useClient }: Props) => {
     const circleRefs = useRef<(HTMLDivElement | null)[]>([]);
     const [glowingCircleIndex, setGlowingCircleIndex] = useState<number | null>(null);
-    const isSmallWidth = useMediaQuery('(max-width: 768px)');
+    const isSmallWidth = useMediaQuery('(max-width: 880px)');
     const isSmallHeight = useMediaQuery('(max-height: 500px)');
     const isSmallScreen = isSmallWidth || isSmallHeight;
     
@@ -56,7 +57,8 @@ export const Timeline = ({ useClient }: Props) => {
       }
 
     return (
-        <div className="relative min-h-screen" style={{ marginLeft: '-25%' }}>
+        <div className="relative min-h-screen" style={{ marginLeft: '-25%'}}>
+            <div className="px-6 pt-20 mx-auto space-y-8 max-w-8xl lg:px-8 md:space-y-16 md:pt-24">
             <div className="absolute inset-0 flex justify-center">
                 <div className="w-0.5 bg-gray-300 h-full"></div>
             </div>
@@ -65,10 +67,14 @@ export const Timeline = ({ useClient }: Props) => {
             {sortedRoles.map((role, index) => (
                 <div key={index} className="h-screen flex items-center justify-center">
                     <div className="relative w-1/5" style={{ marginRight: '10%' }}>
+                        <FadeInSection>
                         <TimelineLeft role={role} />
+                        </FadeInSection>
                     </div>
                     <div className="relative w-1/3" style={{ marginRight: '-10%', marginTop: '5%' }}>
+                        <FadeInSection>
                         <TimelineRight role={role} />
+                        </FadeInSection>
                     </div>
                         {/* Circle */}
                         <div
@@ -92,10 +98,11 @@ export const Timeline = ({ useClient }: Props) => {
                                 boxShadow: glowingCircleIndex === index ? '0 0 20px #ffffff' : 'none',
                             }}
                         ></div>
-                    
                     </div>
+                
                 </div>
             ))}
+        </div>
         </div>
     );
 };
