@@ -15,7 +15,7 @@ export const Navigation: React.FC<NavigationProps> = ({ blur = true}) => {
 	useEffect(() => {
 		if (!ref.current) return;
 		const observer = new IntersectionObserver(([entry]) => {
-			if (blur) { // Only update if blur is true
+			if(blur){// Only update if blur is true
 			  setIntersecting(entry.isIntersecting);
 			}
 		  });
@@ -24,11 +24,11 @@ export const Navigation: React.FC<NavigationProps> = ({ blur = true}) => {
 	}, []);
 	
 	
-	useEffect(() => {
-		if (!blur) {
-		  setIntersecting(true);
-		}
-	  }, [blur]);
+	// useEffect(() => {
+	// 	if (!blur) {
+	// 	  setIntersecting(true);
+	// 	}
+	//   }, [blur]);
 	
 	return (
 		<header ref={ref}>
@@ -37,7 +37,7 @@ export const Navigation: React.FC<NavigationProps> = ({ blur = true}) => {
 					isIntersecting
 						? "bg-zinc-900/0 border-transparent"
 						: "bg-zinc-900/500  border-zinc-800 "
-				} ${blur ? 'backdrop-blur' : ''}`}
+				} ${blur ? 'backdrop-blur' : 'bg-black'}`}
 			>
 				<div className="container flex flex-row-reverse items-center justify-between p-6 mx-auto">
 					<div className="flex justify-between gap-8">

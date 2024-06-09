@@ -3,15 +3,23 @@
 import React from "react";
 import { allRoles } from "contentlayer/generated";
 import { useRef, useEffect, useState } from 'react';
-import { TimelineRight, TimelineLeft } from "./article";
+import { TimelineRight, TimelineLeft, TimelineCard } from "./article";
+import { Card } from "../components/card";
+import useMediaQuery from "./useMediaQuery";
+
 
 interface Props {
     useClient?: boolean;
 }
 
-const Timeline = ({ useClient }: Props) => {
+export const Timeline = ({ useClient }: Props) => {
     const circleRefs = useRef<(HTMLDivElement | null)[]>([]);
     const [glowingCircleIndex, setGlowingCircleIndex] = useState<number | null>(null);
+    const isSmallScreen = useMediaQuery('(max-width: 768px)');
+    
+    const sortedRoles = allRoles.sort((a, b) => a.order - b.order);
+
+ 
     useEffect(() => {
         if (!useClient) return;
 
@@ -40,6 +48,11 @@ const Timeline = ({ useClient }: Props) => {
             observer.disconnect();
         };
     }, [useClient]);
+
+    if (isSmallScreen) {
+        return <TimelineMin />;
+      }
+
     return (
         <div className="relative min-h-screen" style={{ marginLeft: '-25%' }}>
             <div className="absolute inset-0 flex justify-center">
@@ -47,7 +60,7 @@ const Timeline = ({ useClient }: Props) => {
             </div>
 
             {/* Circle Sections */}
-            {allRoles.map((role, index) => (
+            {sortedRoles.map((role, index) => (
                 <div key={index} className="h-screen flex items-center justify-center">
                     <div className="relative w-1/5" style={{ marginRight: '10%' }}>
                         <TimelineLeft role={role} />
@@ -85,98 +98,44 @@ const Timeline = ({ useClient }: Props) => {
     );
 };
 
-export default Timeline;
 
-// const Timeline = ({ useClient }: Props) => {
-//     // Check if useClient prop is provided and render conditionally
-//     if (!useClient) {
-//         return null;
-//     }
-    
-//     // Rest of the component logic
-//     const [scrollY, setScrollY] = useState(0);
+export const TimelineMin = () => {
+    const sortedRoles = allRoles.sort((a, b) => a.order - b.order);
+    return (
+        <div className="px-6 pt-20 mx-auto space-y-8 max-w-7xl lg:px-8 md:space-y-16 md:pt-24 lg:pt-32">
 
-//     useEffect(() => {
-//         const handleScroll = () => {
-//             setScrollY(window.scrollY);
-//         };
-
-//         window.addEventListener('scroll', handleScroll);
-
-//         return () => {
-//             window.removeEventListener('scroll', handleScroll);
-//         };
-//     }, []);
-
-//     // Return the component JSX
-//     return (
-//         <div className="relative min-h-screen" style={{ marginLeft: '-25%' }}>
-//             <div className="absolute inset-0 flex justify-center">
-//                 <div className="w-0.5 bg-gray-300 h-full"></div>
-//             </div>
-
-//             {/* Circle Sections */}
-
-//             <div className="h-screen flex items-center justify-center ">
-
-//                 <div className="relative" style={{ marginRight: '10%' }}>
-//                     <TimelineLeft role={allRoles.at(0)} />
-//                 </div>
-//                 <div className="relative w-1/3" style={{ marginRight: '-10%', marginTop: '5%' }}>
-//                     <TimelineRight role={allRoles.at(0)} />
-
-//                 </div>
-//                 <div className="absolute">
-//                     <div
-//                         className="bg-gray-100 h-6 w-6 rounded-full border-3 border-gray-300"
-//                         style={{
-//                             boxShadow: '0 0 20px #ffffff'
-//                         }}
-//                     ></div>
-//                 </div>
-//             </div>
-
-//             <div className="h-screen flex items-center justify-center ">
-
-//                 <div className="relative w-1/5" style={{ marginRight: '10%' }}>
-//                     <TimelineLeft role={allRoles.at(1)} />
-//                 </div>
-//                 <div className="relative w-1/3" style={{ marginRight: '-10%', marginTop: '5%' }}>
-//                     <TimelineRight role={allRoles.at(1)} />
-
-//                 </div>
-//                 <div className="absolute">
-//                     <div
-//                         className="bg-gray-100 h-6 w-6 rounded-full border-3 border-gray-300"
-//                         style={{
-//                             boxShadow: '0 0 20px #ffffff'
-//                         }}
-//                     ></div>
-//                 </div>
-//             </div>
-
-//             <div className="h-screen flex items-center justify-center ">
-
-//                 <div className="relative" style={{ marginRight: '10%' }}>
-//                     <TimelineLeft role={allRoles.at(2)} />
-//                 </div>
-//                 <div className="relative w-1/3" style={{ marginRight: '-10%', marginTop: '5%' }}>
-//                     <TimelineRight role={allRoles.at(2)} />
-
-//                 </div>
-//                 <div className="absolute">
-//                     <div
-//                         className="bg-gray-100 h-6 w-6 rounded-full border-3 border-gray-300"
-//                         style={{
-//                             boxShadow:'0 0 20px #ffffff'                   
-//                         }}
-//                     ></div>
-//                 </div>
-//             </div>
+        <div className="grid grid-cols-1 gap-4 mx-auto lg:mx-0 md:grid-cols-3">
+          <div className="grid grid-cols-1 gap-4">
+            {sortedRoles
+              .filter((_, i) => i % 3 === 0)
+              .map((role) => (
+                <Card key={role.slug}>
+                  <TimelineCard role={role} />
+                </Card>
+              ))}
+          </div>
+          <div className="grid grid-cols-1 gap-4">
+            {sortedRoles
+              .filter((_, i) => i % 3 === 1)
+              .map((role) => (
+                <Card key={role.slug}>
+                  <TimelineCard role={role} />
+                </Card>
+              ))}
+          </div>
+          <div className="grid grid-cols-1 gap-4">
+            {sortedRoles
+              .filter((_, i) => i % 3 === 2)
+              .map((role) => (
+                <Card key={role.slug}>
+                  <TimelineCard role={role} />
+                </Card>
+              ))}
+          </div>
+      </div>
+      </div>
+    )
+}
 
 
-//         </div>
-//     );
-// };
 
-// export default Timeline;

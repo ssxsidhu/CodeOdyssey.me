@@ -80,6 +80,10 @@ export const Roles = defineDocumentType(() => ({
 		description: {
 			type: "string",
 		},
+		order: {
+			type: "number",
+			required: true,
+		}
 	},
 	computedFields,
 }));

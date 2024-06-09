@@ -1,23 +1,15 @@
-
-import { allRoles } from "contentlayer/generated";
-import Timeline from './timeline';
-import { notFound } from "next/navigation";
-import { Mdx } from "@/app/components/mdx";
+import {Timeline, TimelineMin} from './timeline';
 import { Navigation } from "../components/nav";
-
-
 
 export default async function TimelinePage() {
     
+  
     return (
-        <div className="container relative">
-            
-            <Navigation blur = {false} />
-            <Timeline useClient />
-            
-        </div>
+      <div className="relative pb-16">
+        <Navigation blur={false} />
+        <Timeline useClient />
+      </div>
     );
-    
 }
 
 
