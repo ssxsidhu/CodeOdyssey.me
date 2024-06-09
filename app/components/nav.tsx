@@ -26,7 +26,7 @@ export const Navigation: React.FC<NavigationProps> = ({ blur = true}) => {
 	
 	useEffect(() => {
 		if (!blur) {
-		  setIntersecting(true);
+		  setIntersecting(false);
 		}
 	  }, [blur]);
 	
