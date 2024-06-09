@@ -15,7 +15,9 @@ interface Props {
 export const Timeline = ({ useClient }: Props) => {
     const circleRefs = useRef<(HTMLDivElement | null)[]>([]);
     const [glowingCircleIndex, setGlowingCircleIndex] = useState<number | null>(null);
-    const isSmallScreen = useMediaQuery('(max-width: 768px)');
+    const isSmallWidth = useMediaQuery('(max-width: 768px)');
+    const isSmallHeight = useMediaQuery('(max-height: 500px)');
+    const isSmallScreen = isSmallWidth || isSmallHeight;
     
     const sortedRoles = allRoles.sort((a, b) => a.order - b.order);
 

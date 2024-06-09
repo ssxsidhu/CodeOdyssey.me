@@ -24,11 +24,11 @@ export const Navigation: React.FC<NavigationProps> = ({ blur = true}) => {
 	}, []);
 	
 	
-	// useEffect(() => {
-	// 	if (!blur) {
-	// 	  setIntersecting(true);
-	// 	}
-	//   }, [blur]);
+	useEffect(() => {
+		if (!blur) {
+		  setIntersecting(true);
+		}
+	  }, [blur]);
 	
 	return (
 		<header ref={ref}>
