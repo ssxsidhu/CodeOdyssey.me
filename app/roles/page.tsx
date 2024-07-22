@@ -5,7 +5,7 @@ export default async function TimelinePage() {
     
   
     return (
-      <div className="relative pb-16">
+      <div className="relative">
         <Navigation blur={false} />
         <Timeline useClient />
       </div>
